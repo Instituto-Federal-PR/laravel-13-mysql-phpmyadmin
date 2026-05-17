@@ -16,10 +16,9 @@ RUN install-php-extensions \
     zip \
     opcache
 
-# Copia o entrypoint.sh e garante que ele seja executável DENTRO da imagem
-# Isso é feito antes de copiar o restante do código para evitar problemas de permissão com volumes
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+# Copia o entrypoint.sh para o WORKDIR (/app) e garante que ele seja executável
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 # Copia o restante do código da aplicação
 COPY . .
@@ -29,3 +28,6 @@ RUN mkdir -p vendor && chmod -R 775 vendor
 
 # Configura o FrankenPHP para rodar em HTTP na porta 15000 localmente (sem HTTPS forçado no desenvolvimento)
 ENV SERVER_NAME=:15000
+
+# Define o entrypoint do contêiner para o nosso script
+ENTRYPOINT ["/app/entrypoint.sh"]

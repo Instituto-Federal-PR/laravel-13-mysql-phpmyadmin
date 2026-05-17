@@ -10,9 +10,7 @@ services:
       - "15000:15000" # Acessar a aplicação em http://localhost:15000
     volumes:
       - .:/app # Sincroniza o código da sua máquina com o container
-      # A linha abaixo foi removida, pois o entrypoint.sh será copiado no Dockerfile
-      # - ./entrypoint.sh:/usr/local/bin/entrypoint.sh
-    entrypoint: ["/usr/local/bin/entrypoint.sh"]
+      # A linha entrypoint foi removida, pois o ENTRYPOINT será definido no Dockerfile
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
