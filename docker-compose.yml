@@ -1,5 +1,5 @@
 services:
-  # 1. Serviço da Aplicação Laravel (PHP )
+  # 1. Serviço da Aplicação Laravel (PHP)
   app:
     build:
       context: .
@@ -10,7 +10,8 @@ services:
       - "15000:15000" # Acessar a aplicação em http://localhost:15000
     volumes:
       - .:/app # Sincroniza o código da sua máquina com o container
-      - ./entrypoint.sh:/usr/local/bin/entrypoint.sh # Monta o script de entrada
+      # A linha abaixo foi removida, pois o entrypoint.sh será copiado no Dockerfile
+      # - ./entrypoint.sh:/usr/local/bin/entrypoint.sh
     entrypoint: ["/usr/local/bin/entrypoint.sh"]
     environment:
       - APP_ENV=local

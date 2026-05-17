@@ -16,11 +16,16 @@ RUN install-php-extensions \
     zip \
     opcache
 
+# Copia o entrypoint.sh e garante que ele seja executável DENTRO da imagem
+# Isso é feito antes de copiar o restante do código para evitar problemas de permissão com volumes
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Copia o restante do código da aplicação
 COPY . .
 
 # Garante que o diretório vendor tenha as permissões corretas (será criado no runtime)
 RUN mkdir -p vendor && chmod -R 775 vendor
 
-# Configura o FrankenPHP para rodar em HTTP na porta 80 localmente (sem HTTPS forçado no desenvolvimento)
-ENV SERVER_NAME=:80
+# Configura o FrankenPHP para rodar em HTTP na porta 15000 localmente (sem HTTPS forçado no desenvolvimento)
+ENV SERVER_NAME=:15000
